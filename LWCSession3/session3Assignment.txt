@@ -1,0 +1,84 @@
+LWC Assignment 1  -  Amit Muraletharan
+
+https://salesforce.quip.com/UCXAEADsTOUhttps://salesforce.quip.com/SWfAEAFoI0l
+
+Html:
+
+<template>
+    <lightning-card title="First LWC Component">
+      <div class="slds-var-p-around_medium slds-box">
+        <!--Simple Component-->
+        <lightning-layout multiple-rows>
+
+            <!-- Firstname and Lastname -->
+            <lightning-layout-item size="12" small-device-size="6" padding="around-small">
+                <lightning-input id = "FirstName" type="text" label="FirstName" name="FirstName"></lightning-input>
+             </lightning-layout-item>
+             <lightning-layout-item size="12" small-device-size="6" padding="around-small">
+                <lightning-input id = "LastName" type="text" label="LastName" name="LastName"></lightning-input>
+             </lightning-layout-item>
+             
+             <!-- Submit Button -->
+             <lightning-layout-item size="12" padding="around-small">
+                <div class="slds-align_absolute-center">
+                    <lightning-button id="SubmitButton" type="button" label="Submit" onclick={submitHandler}></lightning-button>
+                </div>
+             </lightning-layout-item>
+         </lightning-layout>
+      </div>
+    </lightning-card>
+  </template>
+
+
+
+Javascript:
+
+import SystemModstamp from "@salesforce/schema/Account.SystemModstamp";
+import { LightningElement, track } from "lwc";
+export default class MyFirstLWCComponent extends LightningElement {
+    @track firstName;
+    @track lastName;
+    submitHandler(event) {
+        var inputs=this.template.querySelectorAll("lightning-input");
+
+        inputs.forEach(function(element){
+            if(element.name=="FirstName")
+            {
+                this.firstName=element.value;
+                element.disabled = true;
+            }
+
+            else if(element.name=="LastName")
+            {
+                this.lastName=element.value;
+                element.disabled=true;
+            }   
+        },this);
+
+        var button = this.template.querySelector("lightning-button");
+        button.disabled = true;
+        
+        console.log("Welcome "+{firstName}+{lastName});
+        alert("Welcome "+{firstName}+{lastName});
+
+        
+        
+
+
+    }
+}
+
+
+
+Metadata:
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__HomePage</target>
+    </targets>
+</LightningComponentBundle>
+
